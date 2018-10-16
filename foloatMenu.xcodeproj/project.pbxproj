@@ -15,6 +15,8 @@
 		CCDDA78721757F0D005AAB39 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CCDDA78621757F0D005AAB39 /* main.m */; };
 		CCDDA79121757F0D005AAB39 /* foloatMenuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCDDA79021757F0D005AAB39 /* foloatMenuTests.m */; };
 		CCDDA79C21757F0D005AAB39 /* foloatMenuUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCDDA79B21757F0D005AAB39 /* foloatMenuUITests.m */; };
+		CCDDA7AA2175C0BD005AAB39 /* fzlmnhctxb_62928.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CCDDA7A92175C0BD005AAB39 /* fzlmnhctxb_62928.jpg */; };
+		CCDDA7B02175C8FB005AAB39 /* ScrollMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCDDA7AF2175C8FB005AAB39 /* ScrollMenuView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,9 @@
 		CCDDA79721757F0D005AAB39 /* foloatMenuUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = foloatMenuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCDDA79B21757F0D005AAB39 /* foloatMenuUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = foloatMenuUITests.m; sourceTree = "<group>"; };
 		CCDDA79D21757F0D005AAB39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CCDDA7A92175C0BD005AAB39 /* fzlmnhctxb_62928.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fzlmnhctxb_62928.jpg; sourceTree = "<group>"; };
+		CCDDA7AE2175C8FB005AAB39 /* ScrollMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollMenuView.h; sourceTree = "<group>"; };
+		CCDDA7AF2175C8FB005AAB39 /* ScrollMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollMenuView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +115,9 @@
 				CCDDA78221757F0D005AAB39 /* LaunchScreen.storyboard */,
 				CCDDA78521757F0D005AAB39 /* Info.plist */,
 				CCDDA78621757F0D005AAB39 /* main.m */,
+				CCDDA7A92175C0BD005AAB39 /* fzlmnhctxb_62928.jpg */,
+				CCDDA7AE2175C8FB005AAB39 /* ScrollMenuView.h */,
+				CCDDA7AF2175C8FB005AAB39 /* ScrollMenuView.m */,
 			);
 			path = foloatMenu;
 			sourceTree = "<group>";
@@ -239,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCDDA78421757F0D005AAB39 /* LaunchScreen.storyboard in Resources */,
+				CCDDA7AA2175C0BD005AAB39 /* fzlmnhctxb_62928.jpg in Resources */,
 				CCDDA78121757F0D005AAB39 /* Assets.xcassets in Resources */,
 				CCDDA77F21757F0D005AAB39 /* Main.storyboard in Resources */,
 			);
@@ -267,6 +276,7 @@
 			files = (
 				CCDDA77C21757F0D005AAB39 /* ViewController.m in Sources */,
 				CCDDA78721757F0D005AAB39 /* main.m in Sources */,
+				CCDDA7B02175C8FB005AAB39 /* ScrollMenuView.m in Sources */,
 				CCDDA77921757F0D005AAB39 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,6 +443,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TP8TFRTM7H;
 				INFOPLIST_FILE = foloatMenu/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.fangwang.com.foloatMenu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -447,6 +458,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TP8TFRTM7H;
 				INFOPLIST_FILE = foloatMenu/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.fangwang.com.foloatMenu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
