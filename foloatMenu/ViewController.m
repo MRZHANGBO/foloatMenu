@@ -9,12 +9,14 @@
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 #import "ViewController.h"
 #import "ScrollMenuView.h"
+/**图片浏览器*/
+#import "DetailHeaderView.h"
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,strong) UIView *headerView;
 @property (nonatomic,strong) ScrollMenuView *selectMenu;
 @property (nonatomic,copy) NSMutableArray *sectionHeaderArray;
-
+@property (nonatomic,strong)NSArray *imageArray;
 @end
 
 @implementation ViewController
@@ -91,11 +93,11 @@
 - (UIView *)headerView{
     if (!_headerView) {
         _headerView = [UIView new];
-        UIImageView *imageView = [UIImageView new];
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.layer.masksToBounds = YES;
-        imageView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 184);
-        imageView.image = [UIImage imageNamed:@"fzlmnhctxb_62928.jpg"];
+        self.imageArray = @[@"img_1",@"img_2",@"img_3"];
+        DetailHeaderView *imageView = [[DetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 184) AndWithImageArray:self.imageArray count:self.imageArray.count];
+        imageView.backBlock = ^(NSInteger index) {
+            NSLog(@"点击了哪一个%ld",index);
+        };
         [_headerView addSubview:imageView];
         _headerView.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
         _headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 250);
@@ -148,6 +150,32 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--()
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    CGFloat offsetY = scrollView.contentOffset.y;
+    NSLog(@"+++++++%f+++++++=",offsetY);
+    if (offsetY > 184-64) {
+        NSLog(@"走了");
+        //防止多次更改页面层级
+        if ([self.selectMenu.superview isEqual:self.view]) {
+            
+            return;
+        }
+        
+        //加载到view上
+        self.selectMenu.frame = CGRectMake(0, 64, SCREEN_WIDTH, 44);
+        [self.view addSubview:self.selectMenu];
+    }else{
+        //防止多次更改页面层级
+        if ([self.selectMenu.superview isEqual:self.tableView]) {
+            
+            return;
+        }
+        
+        //加载到view上
+        self.selectMenu.frame = CGRectMake(0, 196, SCREEN_WIDTH, 44);
+        [self.tableView addSubview:self.selectMenu];
+    }
+}
 
 @end
