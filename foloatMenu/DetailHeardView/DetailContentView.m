@@ -10,6 +10,7 @@
 #import "Masonry.h"
 @interface DetailContentView()
 @property (nonatomic,strong)UILabel *lable;
+
 @end
 @implementation DetailContentView
 -(instancetype)initWithFrame:(CGRect)frame{

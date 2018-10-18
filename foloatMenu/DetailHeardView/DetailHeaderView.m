@@ -36,7 +36,7 @@
 
     _scrollView.delegate = self;
     
-    _scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * (_count+2), self.bounds.size.height);
+    _scrollView.contentSize = CGSizeMake(self.bounds.size.width * (_count+2), self.bounds.size.height);
     
     _scrollView.bounces = NO;
     _scrollView.showsVerticalScrollIndicator = NO;
@@ -50,7 +50,7 @@
         UIImageView *imageView = [[UIImageView alloc] init];
         imageView.userInteractionEnabled = YES;
         imageView.tag = 100 + i;
-        imageView.frame = CGRectMake([UIScreen mainScreen].bounds.size.width*i, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height );
+        imageView.frame = CGRectMake(self.bounds.size.width*i, 0,self.bounds.size.width, self.bounds.size.height);
         if (i == 0) {
             imageView.image = [UIImage imageNamed:_iamgeCount[_count - 1]];
         }else if (i == _count + 1){

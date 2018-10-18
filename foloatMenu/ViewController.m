@@ -17,10 +17,20 @@
 @property (nonatomic,strong) ScrollMenuView *selectMenu;
 @property (nonatomic,copy) NSMutableArray *sectionHeaderArray;
 @property (nonatomic,strong)NSArray *imageArray;
+@property (nonatomic,copy) NSMutableArray *sectionLocationArray;
+@property (nonatomic,assign) BOOL scrollFlag; //手动滚动标志，防止点击菜单滚动触发didScroll代理方法造成菜单定位死循环
+
 @end
 
 @implementation ViewController
-
+- (NSMutableArray *)sectionLocationArray{
+    
+    if (!_sectionLocationArray) {
+        _sectionLocationArray = [NSMutableArray new];
+    }
+    
+    return _sectionLocationArray;
+}
 - (NSMutableArray *)sectionHeaderArray{
     
     if (!_sectionHeaderArray) {
@@ -57,18 +67,18 @@
     if (!_selectMenu) {
         _selectMenu = [ScrollMenuView new];
         _selectMenu.frame = CGRectMake(0, 196, SCREEN_WIDTH, 44);
-        _selectMenu.titleArray = @[@"商品介绍",@"商品型号",@"商品参数",@"相关评论",@"相关推荐"];
+        _selectMenu.titleArray = @[@"商品介绍",@"商品型号",@"商品参数",@"相关评论"];
         __weak typeof(self) _ws = self;
         
         [_selectMenu setPageSelectBlock:^(NSInteger index) {
-            NSLog(@"++++%ld+++++",index);
+            NSLog(@"点击了第一个%ld+++++",index);
             CGRect rect = [_ws.tableView rectForSection:index];
             
-            CGFloat offsetY = rect.origin.y - 64;
+            CGFloat offsetY = rect.origin.y - 64-44-10;
             
             [_ws.tableView setContentOffset:CGPointMake(0, offsetY) animated:YES];
             
-//            _ws.scrollFlag = YES; //打开菜单点击标志，防止滚动代理didScrollView触发
+            _ws.scrollFlag = YES; //打开菜单点击标志，防止滚动代理didScrollView触发
             
         }];
         
@@ -107,6 +117,11 @@
     return _headerView;
 }
 #pragma mark --- tableView 的代理方法
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    
+    self.scrollFlag = NO;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return self.selectMenu.titleArray.count;
 }
@@ -136,13 +151,11 @@
 //    }
     return 44;
 }
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    
-//    self.scrollFlag = NO;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
+    [self markSectionHeaderLocation];
 }
 
 
@@ -151,9 +164,14 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    
     CGFloat offsetY = scrollView.contentOffset.y;
     NSLog(@"+++++++%f+++++++=",offsetY);
+    [self jumpSubMenu:offsetY];
+    [self updateMenuTitle:offsetY];
+ 
+}
+-(void)jumpSubMenu:(CGFloat)offsetY{
+
     if (offsetY > 184-64) {
         NSLog(@"走了");
         //防止多次更改页面层级
@@ -178,4 +196,71 @@
     }
 }
 
+- (void)updateMenuTitle:(CGFloat)contentOffsetY{
+    
+    if(!self.scrollFlag){
+        
+        //遍历
+        for (int i = 0; i<self.sectionLocationArray.count; i++) {
+            
+            //最后一个按钮
+            if (i == self.sectionLocationArray.count - 1) {
+                
+                if (contentOffsetY >= [self.sectionLocationArray[i] floatValue]) {
+                    
+                    
+                    [self.selectMenu setCurrentPage:i];
+                    
+                }
+                
+                
+            }else{
+                
+                if (contentOffsetY >= [self.sectionLocationArray[i] floatValue] && contentOffsetY < [self.sectionLocationArray[i+1] floatValue]) {
+                    
+                    
+                    [self.selectMenu setCurrentPage:i];
+                }
+                
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+}
+- (void)markSectionHeaderLocation{
+    
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        self.sectionLocationArray = nil;
+        //计算对应每个分组头的位置
+        for (int i = 0; i < self.selectMenu.titleArray.count; i++) {
+            
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:i];
+            CGRect frame = [self.tableView rectForSection:indexPath.section];
+            
+            //第一组的偏移量比其他组少10
+            CGFloat offsetY = (frame.origin.y-44-64);
+            
+            NSLog(@"offsetY is %f",offsetY);
+            
+            [self.sectionLocationArray addObject:[NSNumber numberWithFloat:offsetY]];
+            
+        }
+        
+        
+    });
+    
+    
+    
+}
 @end
