@@ -39,7 +39,7 @@
     return _buttonsArray;
 }
 - (void)setCurrentPage:(NSInteger)currentPage{
-    
+    NSLog(@"这个数据为什么是空%ld",(long)currentPage);
     //防止重复设置
     if (_currentPage == currentPage) {
         

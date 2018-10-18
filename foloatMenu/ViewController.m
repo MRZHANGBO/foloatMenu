@@ -11,6 +11,9 @@
 #import "ScrollMenuView.h"
 /**图片浏览器*/
 #import "DetailHeaderView.h"
+#import "GoodsNewView.h"
+/**cell*/
+#import "GoodsNewCell.h"
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,strong) UIView *headerView;
@@ -38,8 +41,7 @@
         
         for (int i = 0; i < self.selectMenu.titleArray.count; i++) {
             
-            UIView *sectionHeader = [UIView new];
-            sectionHeader.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
+            UIView *sectionHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)];
             sectionHeader.backgroundColor = [UIColor whiteColor];
             
             UILabel *titlLabel = [UILabel new];
@@ -91,9 +93,12 @@
     
     if (!_tableView) {
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
-        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"reuseID"];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.estimatedRowHeight = 200;
+        _tableView.rowHeight = UITableViewAutomaticDimension;
+        [self.tableView registerClass:[GoodsNewCell class] forCellReuseIdentifier:@"GoodsNewCell"];
         _tableView.tableHeaderView = self.headerView;
        [_tableView addSubview:self.selectMenu];
     }
@@ -137,8 +142,20 @@
     return 10;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseID"];
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row];
+    static NSString *cellID;
+    if (indexPath.section==0) {
+        if (indexPath.row == 0) {
+            GoodsNewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GoodsNewCell" forIndexPath:indexPath];
+            return cell;
+        }else{
+            UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
+            cell.textLabel.text = @"嘿嘿";
+            return cell;
+        }
+
+    }
+    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
+    cell.textLabel.text = @"嘿嘿";
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -155,7 +172,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
-    [self markSectionHeaderLocation];
+    [self.tableView reloadData];
 }
 
 
@@ -164,6 +181,8 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self markSectionHeaderLocation];
+
     CGFloat offsetY = scrollView.contentOffset.y;
     NSLog(@"+++++++%f+++++++=",offsetY);
     [self jumpSubMenu:offsetY];
@@ -207,12 +226,12 @@
             if (i == self.sectionLocationArray.count - 1) {
                 
                 if (contentOffsetY >= [self.sectionLocationArray[i] floatValue]) {
-                    
-                    
+//
+//                    NSLog(@"这个是哪一位%d",i);
                     [self.selectMenu setCurrentPage:i];
                     
                 }
-                
+            
                 
             }else{
                 
@@ -236,6 +255,7 @@
     
     
 }
+
 - (void)markSectionHeaderLocation{
     
     
@@ -249,7 +269,7 @@
             CGRect frame = [self.tableView rectForSection:indexPath.section];
             
             //第一组的偏移量比其他组少10
-            CGFloat offsetY = (frame.origin.y-44-64);
+            CGFloat offsetY = (frame.origin.y-64);
             
             NSLog(@"offsetY is %f",offsetY);
             

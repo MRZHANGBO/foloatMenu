@@ -30,6 +30,27 @@
     return self;
 }
 -(void)setUI{
+    _buyPrice = [UILabel new];
+    _buyPrice.font = [UIFont systemFontOfSize:18.f];
+    _buyPrice.text = @"¥ 139";
+    _buyPrice.textColor = [UIColor orangeColor];
+    [self addSubview:_buyPrice];
+    [_buyPrice mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).offset(10);
+        make.left.equalTo(self.mas_left).offset(5);
+        make.width.equalTo(self);
+    }];
     
+    _onlineSales = [UILabel new];
+    _onlineSales.numberOfLines = 0;
+    _onlineSales.font = [UIFont systemFontOfSize:16.f];
+    _onlineSales.text = @"同款门店有售";
+    _onlineSales.textColor = [UIColor lightGrayColor];
+    [self addSubview:_onlineSales];
+    [_onlineSales mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_buyPrice.mas_bottom).offset(5);
+        make.left.equalTo(_buyPrice.mas_left).offset(5);
+        make.width.equalTo(self);
+    }];
 }
 @end
