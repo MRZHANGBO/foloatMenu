@@ -39,6 +39,7 @@
         make.top.equalTo(self.mas_top).offset(10);
         make.left.equalTo(self.mas_left).offset(5);
         make.width.equalTo(self);
+        
     }];
     
     _onlineSales = [UILabel new];

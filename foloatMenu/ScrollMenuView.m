@@ -42,7 +42,7 @@
     NSLog(@"这个数据为什么是空%ld",(long)currentPage);
     //防止重复设置
     if (_currentPage == currentPage) {
-        
+
         return;
     }
     
@@ -139,13 +139,14 @@
             [self.ScrollView scrollRectToVisible:CGRectMake(offsetX, 0, self.ScrollView.frame.size.width, sender.frame.size.height) animated:YES];
             self.bottomBarView.frame = CGRectMake(self.currentSelectBtn.frame.origin.x, self.ScrollView.frame.size.height-2, self.currentSelectBtn.frame.size.width, 2);
         }
-        if(self.pageSelectBlock ){
+        if(self.pageSelectBlock && self.isBlock){
             
             NSLog(@"current seleted menu is %ld",sender.tag);
-            self.currentPage = sender.tag;  //更新当前的curPage
+           // self.currentPage = sender.tag;  //更新当前的curPage
             self.pageSelectBlock(sender.tag);
             
         }
+        self.isBlock = YES;
     }];
 
     

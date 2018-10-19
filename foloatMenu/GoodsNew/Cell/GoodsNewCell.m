@@ -18,6 +18,7 @@
 @property (nonatomic,strong)UILabel * emsPrice;//快递价格
 @property (nonatomic,strong)UILabel * sales;//销量
 @property (nonatomic,strong)UILabel * address;//地址
+@property (nonatomic,strong)UIImageView *iamgeView;//分享图片
 @end
 @implementation GoodsNewCell
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -102,6 +103,15 @@
         make.right.equalTo(self.contentView.mas_right).offset(-5);
         make.width.mas_equalTo(@100);
     }];
+    
+    _iamgeView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"分享"]];
+    [self.contentView addSubview:_iamgeView];
+    [_iamgeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.contentView.mas_centerY);
+        make.right.equalTo(self.contentView.mas_right).offset(-10);
+        make.height.width.mas_equalTo(@32);
+    }];
+    
     
     
     UIView *view = [UIView new];

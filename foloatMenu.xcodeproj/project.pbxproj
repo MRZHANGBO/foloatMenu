@@ -33,6 +33,9 @@
 		CCDDA79C21757F0D005AAB39 /* foloatMenuUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCDDA79B21757F0D005AAB39 /* foloatMenuUITests.m */; };
 		CCDDA7AA2175C0BD005AAB39 /* fzlmnhctxb_62928.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CCDDA7A92175C0BD005AAB39 /* fzlmnhctxb_62928.jpg */; };
 		CCDDA7B02175C8FB005AAB39 /* ScrollMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCDDA7AF2175C8FB005AAB39 /* ScrollMenuView.m */; };
+		CCE57508217982E3000009A0 /* BaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE57507217982E3000009A0 /* BaseCell.m */; };
+		CCE5750B217987DB000009A0 /* GoodSaleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE5750A217987DB000009A0 /* GoodSaleCell.m */; };
+		CCE5750E2179CA6B000009A0 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE5750D2179CA6B000009A0 /* ActivityCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +111,12 @@
 		CCDDA7A92175C0BD005AAB39 /* fzlmnhctxb_62928.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fzlmnhctxb_62928.jpg; sourceTree = "<group>"; };
 		CCDDA7AE2175C8FB005AAB39 /* ScrollMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollMenuView.h; sourceTree = "<group>"; };
 		CCDDA7AF2175C8FB005AAB39 /* ScrollMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollMenuView.m; sourceTree = "<group>"; };
+		CCE57506217982E3000009A0 /* BaseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseCell.h; sourceTree = "<group>"; };
+		CCE57507217982E3000009A0 /* BaseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseCell.m; sourceTree = "<group>"; };
+		CCE57509217987DB000009A0 /* GoodSaleCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoodSaleCell.h; sourceTree = "<group>"; };
+		CCE5750A217987DB000009A0 /* GoodSaleCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoodSaleCell.m; sourceTree = "<group>"; };
+		CCE5750C2179CA6B000009A0 /* ActivityCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityCell.h; sourceTree = "<group>"; };
+		CCE5750D2179CA6B000009A0 /* ActivityCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +211,12 @@
 			children = (
 				CCDBDA152178736700872C8F /* GoodsNewCell.h */,
 				CCDBDA162178736700872C8F /* GoodsNewCell.m */,
+				CCE57506217982E3000009A0 /* BaseCell.h */,
+				CCE57507217982E3000009A0 /* BaseCell.m */,
+				CCE57509217987DB000009A0 /* GoodSaleCell.h */,
+				CCE5750A217987DB000009A0 /* GoodSaleCell.m */,
+				CCE5750C2179CA6B000009A0 /* ActivityCell.h */,
+				CCE5750D2179CA6B000009A0 /* ActivityCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -409,12 +424,15 @@
 				CC34CFA9217712C800EEF4BC /* DetailHeaderView.m in Sources */,
 				CC34CFD22177394F00EEF4BC /* MASConstraintMaker.m in Sources */,
 				CC34CFD82177394F00EEF4BC /* View+MASAdditions.m in Sources */,
+				CCE5750E2179CA6B000009A0 /* ActivityCell.m in Sources */,
 				CCDDA77C21757F0D005AAB39 /* ViewController.m in Sources */,
 				CC34CFD12177394F00EEF4BC /* MASConstraint.m in Sources */,
 				CC34CFB3217724AC00EEF4BC /* DetailContentView.m in Sources */,
 				CC34CFD42177394F00EEF4BC /* MASViewAttribute.m in Sources */,
+				CCE5750B217987DB000009A0 /* GoodSaleCell.m in Sources */,
 				CC34CFD72177394F00EEF4BC /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				CCDDA78721757F0D005AAB39 /* main.m in Sources */,
+				CCE57508217982E3000009A0 /* BaseCell.m in Sources */,
 				CC34CFD02177394F00EEF4BC /* MASCompositeConstraint.m in Sources */,
 				CCDBDA1421782BF100872C8F /* GoodsNewView.m in Sources */,
 				CC34CFD32177394F00EEF4BC /* MASLayoutConstraint.m in Sources */,

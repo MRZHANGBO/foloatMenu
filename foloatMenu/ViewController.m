@@ -14,6 +14,8 @@
 #import "GoodsNewView.h"
 /**cell*/
 #import "GoodsNewCell.h"
+#import "GoodSaleCell.h"
+#import "ActivityCell.h"
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,strong) UIView *headerView;
@@ -69,7 +71,7 @@
     if (!_selectMenu) {
         _selectMenu = [ScrollMenuView new];
         _selectMenu.frame = CGRectMake(0, 196, SCREEN_WIDTH, 44);
-        _selectMenu.titleArray = @[@"商品介绍",@"商品型号",@"商品参数",@"相关评论"];
+        _selectMenu.titleArray = @[@"商品介绍",@"评价",@"商品参数",@"相关评论"];
         __weak typeof(self) _ws = self;
         
         [_selectMenu setPageSelectBlock:^(NSInteger index) {
@@ -96,9 +98,12 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.estimatedRowHeight = 200;
+        _tableView.estimatedRowHeight = 300;
         _tableView.rowHeight = UITableViewAutomaticDimension;
         [self.tableView registerClass:[GoodsNewCell class] forCellReuseIdentifier:@"GoodsNewCell"];
+        [self.tableView registerClass:[GoodSaleCell class] forCellReuseIdentifier:@"GoodSaleCell"];
+        [self.tableView registerClass:[ActivityCell class] forCellReuseIdentifier:@"ActivityCell"];
+
         _tableView.tableHeaderView = self.headerView;
        [_tableView addSubview:self.selectMenu];
     }
@@ -111,7 +116,6 @@
         self.imageArray = @[@"img_1",@"img_2",@"img_3"];
         DetailHeaderView *imageView = [[DetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 184) AndWithImageArray:self.imageArray count:self.imageArray.count];
         imageView.backBlock = ^(NSInteger index) {
-            NSLog(@"点击了哪一个%ld",index);
         };
         [_headerView addSubview:imageView];
         _headerView.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
@@ -139,6 +143,9 @@
     return 0.001;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (section == 0) {
+        return 4;
+    }
     return 10;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -147,12 +154,15 @@
         if (indexPath.row == 0) {
             GoodsNewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GoodsNewCell" forIndexPath:indexPath];
             return cell;
-        }else{
-            UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
-            cell.textLabel.text = @"嘿嘿";
+        }else if (indexPath.row == 1){
+            GoodSaleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GoodSaleCell" forIndexPath:indexPath];
+            return cell;
+        }else if (indexPath.row == 2){
+            ActivityCell * cell = [tableView dequeueReusableCellWithIdentifier:@"ActivityCell" forIndexPath:indexPath];
             return cell;
         }
-
+        ActivityCell * cell = [tableView dequeueReusableCellWithIdentifier:@"ActivityCell" forIndexPath:indexPath];
+        return cell;
     }
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
     cell.textLabel.text = @"嘿嘿";
@@ -171,6 +181,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.tableView];
     [self.tableView reloadData];
 }
@@ -181,10 +192,10 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [self markSectionHeaderLocation];
+//    [self markSectionHeaderLocation];
 
     CGFloat offsetY = scrollView.contentOffset.y;
-    NSLog(@"+++++++%f+++++++=",offsetY);
+//    NSLog(@"+++++++%f+++++++=",offsetY);
     [self jumpSubMenu:offsetY];
     [self updateMenuTitle:offsetY];
  
@@ -192,7 +203,7 @@
 -(void)jumpSubMenu:(CGFloat)offsetY{
 
     if (offsetY > 184-64) {
-        NSLog(@"走了");
+//        NSLog(@"走了");
         //防止多次更改页面层级
         if ([self.selectMenu.superview isEqual:self.view]) {
             
@@ -218,69 +229,72 @@
 - (void)updateMenuTitle:(CGFloat)contentOffsetY{
     
     if(!self.scrollFlag){
-        
-        //遍历
-        for (int i = 0; i<self.sectionLocationArray.count; i++) {
-            
-            //最后一个按钮
-            if (i == self.sectionLocationArray.count - 1) {
-                
-                if (contentOffsetY >= [self.sectionLocationArray[i] floatValue]) {
+        NSIndexPath * middleIndexPath = [self.tableView  indexPathForRowAtPoint:CGPointMake(0, contentOffsetY+108 )];
+        NSLog(@"中间的cell：第 %ld 组 %ld个",middleIndexPath.section, middleIndexPath.row);
+
+        [self.selectMenu setCurrentPage:middleIndexPath.section];
+//        //遍历
+//        for (int i = 0; i<self.sectionLocationArray.count; i++) {
 //
-//                    NSLog(@"这个是哪一位%d",i);
-                    [self.selectMenu setCurrentPage:i];
-                    
-                }
-            
-                
-            }else{
-                
-                if (contentOffsetY >= [self.sectionLocationArray[i] floatValue] && contentOffsetY < [self.sectionLocationArray[i+1] floatValue]) {
-                    
-                    
-                    [self.selectMenu setCurrentPage:i];
-                }
-                
-                
-            }
-            
-            
-            
-        }
+//            //最后一个按钮
+//            if (i == self.sectionLocationArray.count - 1) {
+//
+//                if (contentOffsetY >= [self.sectionLocationArray[i] floatValue]) {
+////
+////                    NSLog(@"这个是哪一位%d",i);
+//                    [self.selectMenu setCurrentPage:i];
+//
+//                }
+//
+//
+//            }else{
+//
+//                if (contentOffsetY >= [self.sectionLocationArray[i] floatValue] && contentOffsetY < [self.sectionLocationArray[i+1] floatValue]) {
+//
+//
+//                    [self.selectMenu setCurrentPage:i];
+//                }
+//
+//
+//            }
         
-        
-        
+            
+//
+//        }
+//
+//
+//
     }
     
     
     
 }
 
-- (void)markSectionHeaderLocation{
-    
-    
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
-        self.sectionLocationArray = nil;
-        //计算对应每个分组头的位置
-        for (int i = 0; i < self.selectMenu.titleArray.count; i++) {
-            
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:i];
-            CGRect frame = [self.tableView rectForSection:indexPath.section];
-            
-            //第一组的偏移量比其他组少10
-            CGFloat offsetY = (frame.origin.y-64);
-            
-            NSLog(@"offsetY is %f",offsetY);
-            
-            [self.sectionLocationArray addObject:[NSNumber numberWithFloat:offsetY]];
-            
-        }
-        
-        
-    });
-    
-    
-    
-}
+//- (void)markSectionHeaderLocation{
+//
+//
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//
+//        self.sectionLocationArray = nil;
+//        //计算对应每个分组头的位置
+//        for (int i = 0; i < self.selectMenu.titleArray.count; i++) {
+//
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:i];
+//            CGRect frame = [self.tableView rectForSection:indexPath.section];
+//
+//            //第一组的偏移量比其他组少10
+//            CGFloat offsetY = (frame.origin.y-64);
+//
+//            NSLog(@"offsetY is %f",offsetY);
+//
+//            [self.sectionLocationArray addObject:[NSNumber numberWithFloat:offsetY]];
+//
+//        }
+//
+//
+//    });
+//
+//
+//
+//}
 @end
